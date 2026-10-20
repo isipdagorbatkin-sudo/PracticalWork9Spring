@@ -1,0 +1,32 @@
+server:
+  port: 8082
+
+app:
+  restaurant:
+    connect-timeout: 1s
+    read-timeout: 2s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,circuitbreakers,circuitbreakerevents
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      restaurantService:
+        register-health-indicator: true
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        permitted-number-of-calls-in-half-open-state: 3
+        wait-duration-in-open-state: 10s
+        failure-rate-threshold: 50
+        ignore-exceptions:
+          - com.example.orders.restaurant.RestaurantBusinessException
+
+springdoc:
+  paths-to-match: /api/orders/**

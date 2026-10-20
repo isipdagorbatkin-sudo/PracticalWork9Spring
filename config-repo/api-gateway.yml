@@ -1,0 +1,62 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: restaurants
+              uri: lb://restaurant-service
+              predicates:
+                - Path=/api/restaurants/**
+            - id: orders
+              uri: lb://order-service
+              predicates:
+                - Path=/api/orders/**
+            - id: deliveries
+              uri: lb://delivery-service
+              predicates:
+                - Path=/api/deliveries/**
+            - id: restaurant-docs
+              uri: lb://restaurant-service
+              predicates:
+                - Path=/docs/restaurants
+                - Method=GET
+              filters:
+                - SetPath=/v3/api-docs
+            - id: order-docs
+              uri: lb://order-service
+              predicates:
+                - Path=/docs/orders
+                - Method=GET
+              filters:
+                - SetPath=/v3/api-docs
+            - id: delivery-docs
+              uri: lb://delivery-service
+              predicates:
+                - Path=/docs/deliveries
+                - Method=GET
+              filters:
+                - SetPath=/v3/api-docs
+          globalcors:
+            add-to-simple-url-handler-mapping: true
+            cors-configurations:
+              '[/**]':
+                allowedOrigins:
+                  - http://localhost:8090
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - PATCH
+                  - DELETE
+                  - OPTIONS
+                allowedHeaders:
+                  - Content-Type
+                  - Accept
+                maxAge: 3600
+          httpclient:
+            connect-timeout: 1000
+            response-timeout: 5s

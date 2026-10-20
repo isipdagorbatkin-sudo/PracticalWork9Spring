@@ -1,0 +1,22 @@
+spring:
+  config:
+    import: file:../config-repo/application.yml,file:../config-repo/delivery-service.yml
+  cloud:
+    config:
+      enabled: false
+    service-registry:
+      auto-registration:
+        enabled: false
+  main:
+    banner-mode: "off"
+  jpa:
+    open-in-view: false
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    root: WARN
+    com.example.deliveries: INFO

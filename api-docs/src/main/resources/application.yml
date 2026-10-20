@@ -1,0 +1,31 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: api-docs
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    urls-primary-name: Orders
+    urls:
+      - name: Restaurants
+        url: ${GATEWAY_URL:http://localhost:8080}/docs/restaurants
+      - name: Orders
+        url: ${GATEWAY_URL:http://localhost:8080}/docs/orders
+      - name: Deliveries
+        url: ${GATEWAY_URL:http://localhost:8080}/docs/deliveries
+    display-request-duration: true
+    operations-sorter: method
+    tags-sorter: alpha
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always

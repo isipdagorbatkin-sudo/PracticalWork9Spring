@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: api-gateway-test
+  cloud:
+    config:
+      enabled: false
