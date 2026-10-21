@@ -81,6 +81,15 @@ class GatewayRoutingTest {
     }
 
     @Test
+    void servesFrontendFromGatewayRoot() throws Exception {
+        var response = get("/");
+        assertThat(response.statusCode()).isEqualTo(200);
+        assertThat(response.headers().firstValue("Content-Type")).hasValueSatisfying(value ->
+                assertThat(value).startsWith("text/html"));
+        assertThat(response.body()).contains("Еда рядом", "/app.js", "/styles.css");
+    }
+
+    @Test
     void rewritesEachDocumentationPath() throws Exception {
         for (String name : new String[]{"restaurants", "orders", "deliveries"}) {
             var response = get("/docs/" + name);

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Учебное приложение доставки еды на Spring Cloud">
+    <title>Еда рядом</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="header">
+    <a class="brand" href="#top" aria-label="Еда рядом, на главную">
+        <span class="brand-mark">Е</span>
+        <span>Еда рядом</span>
+    </a>
+    <nav class="nav" aria-label="Основная навигация">
+        <a href="#restaurants">Рестораны</a>
+        <a href="#tracking">Заказ</a>
+        <a class="cart-link" href="#cart">Корзина <span id="cart-count">0</span></a>
+    </nav>
+</header>
+
+<main id="top">
+    <section class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">Доставка без лишних шагов</p>
+            <h1>Выберите блюда.<br><span>Остальное сделаем мы.</span></h1>
+            <p class="hero-text">Меню ресторанов, оформление заказа и назначение курьера в одном простом интерфейсе.</p>
+            <a class="primary-button" href="#restaurants">Выбрать ресторан</a>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+            <div class="plate">
+                <div class="pizza">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="delivery-chip">Доставим горячим</div>
+        </div>
+    </section>
+
+    <section class="steps" aria-label="Как сделать заказ">
+        <article><span>01</span><div><strong>Выберите</strong><p>ресторан и блюда</p></div></article>
+        <article><span>02</span><div><strong>Оформите</strong><p>заказ на свой адрес</p></div></article>
+        <article><span>03</span><div><strong>Следите</strong><p>за статусом доставки</p></div></article>
+    </section>
+
+    <section class="catalog-section" id="restaurants">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Меню</p>
+                <h2>Рестораны рядом</h2>
+            </div>
+            <button class="text-button" id="refresh-button" type="button">Обновить</button>
+        </div>
+
+        <div class="restaurant-list" id="restaurant-list" aria-live="polite">
+            <div class="skeleton wide"></div>
+            <div class="skeleton wide"></div>
+        </div>
+
+        <div class="catalog-layout">
+            <div>
+                <div class="menu-heading">
+                    <div>
+                        <h3 id="menu-title">Выберите ресторан</h3>
+                        <p id="menu-subtitle">После выбора здесь появятся доступные блюда</p>
+                    </div>
+                </div>
+                <div class="menu-grid" id="menu-grid">
+                    <div class="empty-state">
+                        <span>🍽️</span>
+                        <strong>Меню пока не открыто</strong>
+                        <p>Нажмите на карточку ресторана выше.</p>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="cart" id="cart">
+                <div class="cart-header">
+                    <div>
+                        <p class="eyebrow">Ваш заказ</p>
+                        <h3>Корзина</h3>
+                    </div>
+                    <button class="icon-button" id="clear-cart" type="button" aria-label="Очистить корзину">×</button>
+                </div>
+                <div class="cart-items" id="cart-items">
+                    <div class="cart-empty">Добавьте блюда из меню</div>
+                </div>
+                <div class="cart-total">
+                    <span>Итого</span>
+                    <strong id="cart-total">0 ₽</strong>
+                </div>
+                <form class="checkout-form" id="checkout-form">
+                    <label>
+                        Ваше имя
+                        <input id="customer-name" name="customerName" type="text" maxlength="100" placeholder="Артём" required>
+                    </label>
+                    <label>
+                        Адрес доставки
+                        <input id="delivery-address" name="deliveryAddress" type="text" maxlength="300" placeholder="Москва, Ленина, 1" required>
+                    </label>
+                    <button class="primary-button full" id="order-button" type="submit" disabled>Оформить заказ</button>
+                </form>
+                <p class="cart-note">Финальную стоимость проверит и рассчитает сервер.</p>
+            </aside>
+        </div>
+    </section>
+
+    <section class="tracking-section" id="tracking">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Доставка</p>
+                <h2>Статус заказа</h2>
+            </div>
+        </div>
+        <div class="tracking-card" id="tracking-card">
+            <div class="tracking-empty">
+                <span>🛵</span>
+                <div>
+                    <strong>Здесь появится ваш заказ</strong>
+                    <p>Сначала выберите ресторан и оформите покупку.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div>
+        <strong>Еда рядом</strong>
+        <p>Учебный проект на Spring Boot и Spring Cloud</p>
+    </div>
+    <a href="http://localhost:8090/swagger-ui.html">Swagger UI</a>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="/app.js" defer></script>
+</body>
+</html>
